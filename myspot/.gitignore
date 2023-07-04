@@ -38,3 +38,5 @@ out/
 
 ### settings ###
 !**/src/main/resources/application.properties
+!**/src/main/resources/serviceAccountKey.json
+!**/src/main/resources/FirebaseServiceAccountKey.json

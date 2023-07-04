@@ -3,23 +3,26 @@ package com.myspot.myspot.spot.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.myspot.myspot.spot.domain.repository.LocationRepository;
 import com.myspot.myspot.spot.dto.LocationDTO;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class LocationService {
     private ObjectMapper mapper = new ObjectMapper();
+    private LocationRepository locationRepository;
 
     @SneakyThrows
-    public JsonNode getResponse(String regcode){
+    public JsonNode getResponse(){
         RestTemplate restTemplate = new RestTemplate();
-        String fooResourceUrl = "https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=" + regcode;
+        String fooResourceUrl = "https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00";
         ResponseEntity<String> response
                 =restTemplate.getForEntity(fooResourceUrl, String.class);
 
@@ -29,57 +32,53 @@ public class LocationService {
         return name;
     }
 
-    public LocationDTO getCity(){
-        JsonNode res = getResponse("*00000000");
+    public Map<String, Map<String, List<String>>> getCity(){
+        JsonNode res = getResponse();
 
         List<String> cityList = res.findValuesAsText("name");
-        List<String> cityCode = res.findValuesAsText("code");
 
-        for(int i=0;i<cityCode.size();i++){
-            cityCode.set(i, cityCode.get(i).substring(0,2));
+        Map<String, Map<String, List<String>>> cityAllList = new HashMap<>();
+
+        for(int i=0;i<cityList.size();i++){
+            if(cityList.get(i).split(" ").length==1){
+                cityAllList.put(cityList.get(i), new HashMap<>());
+            }else if(cityList.get(i).split(" ").length==2){
+                cityAllList.get(cityList.get(i).split(" ")[0])
+                        .put(cityList.get(i).split(" ")[1], new ArrayList<String>());
+            }else{
+                cityAllList.get(cityList.get(i).split(" ")[0])
+                        .get(cityList.get(i).split(" ")[1])
+                        .add(cityList.get(i).split(" ")[2]);
+            }
         }
-        cityList.add(0, "선택없음");
-        cityCode.add(0, "00");
 
-        LocationDTO locationDTO = new LocationDTO(cityList, cityCode);
-
-        return locationDTO;
+        return cityAllList;
     }
 
-    public LocationDTO getGu(String Code){
-        //code가 2자리가 아닐때 예외처리
+    public Map<String, Object> addLocationInfo(LocationDTO locationDTO){
+        Map<String, Object> result = new HashMap<>();
 
-        JsonNode res = getResponse(Code + "*000000");
+        System.out.println(locationDTO);
 
-        List<String> cityList = res.findValuesAsText("name");
-        List<String> cityCode = res.findValuesAsText("code");
-
-        cityList.set(0, "선택없음");
-        for(int i=1;i<cityList.size();i++){
-            cityList.set(i, cityList.get(i).split(" ")[1]);
-        }
-        for(int i=0;i<cityCode.size();i++){
-            cityCode.set(i, cityCode.get(i).substring(0,4));
-        }
-        LocationDTO locationDTO = new LocationDTO(cityList, cityCode);
-
-        return locationDTO;
-    }
-
-    public LocationDTO getDong(String Code){
-        //code가 4자리가 아닐때 예외처리
-        JsonNode res = getResponse(Code + "*");
-
-        List<String> cityList = res.findValuesAsText("name");
-        List<String> cityCode = res.findValuesAsText("code");
-
-        cityList.set(0, "선택없음");
-        for(int i=1;i<cityList.size();i++){
-            cityList.set(i, cityList.get(i).split(" ")[2]);
+        if(locationDTO.getLocationMapCode() == null){
+            result.put("result", "fail");
+            result.put("message", "location map code가 없음");
+            return result;
         }
 
-        LocationDTO locationDTO = new LocationDTO(cityList, cityCode);
+        if(!locationRepository.findAllByLocationmapcode(locationDTO.getLocationMapCode()).isEmpty()){
+            result.put("result", "fail");
+            result.put("message", "해당 location은 이미 등록되어 있음");
+            return result;
+        }
 
-        return locationDTO;
+        if(locationRepository.save(locationDTO.toEntity())==null){
+            result.put("result", "fail");
+        }else{
+            result.put("result", "success");
+            result.put("locationCode", locationRepository.findByLocationmapcode(locationDTO.getLocationMapCode()));
+        }
+
+        return result;
     }
 }

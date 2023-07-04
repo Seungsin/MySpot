@@ -1,6 +1,5 @@
 package com.myspot.myspot;
 
-import com.myspot.myspot.user.service.UserSecurityService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +19,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import com.myspot.myspot.user.service.UserSecurityService;
 
 //@RequiredArgsConstructor
 @Configuration //스프링의 환경설정 파일
@@ -58,7 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         System.out.println("authentication : " + authentication.getName());
                         response.setStatus(200);
-                        response.sendRedirect("/user/login/"+authentication.getName());
+
+                        //response.sendRedirect("/user/login/"+authentication.getName());
+
                     }
                 })
                 .failureHandler(new AuthenticationFailureHandler() {
