@@ -1,5 +1,6 @@
 package com.myspot.myspot.user.domain.entity;
 
+import com.myspot.myspot.user.domain.UserRoleEnum;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +27,10 @@ public class UserEntity {
     @Column(length = 20, nullable = false)
     private String username;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING) // Enum 타입 저장할때 사용
+    private UserRoleEnum role;
+
     private Boolean usersocial;
 
     private int userlevel;
@@ -37,7 +42,7 @@ public class UserEntity {
     private String userimage;
 
     @Builder
-    public UserEntity(String email, String password, Boolean social, String name) {
+    public UserEntity(String email, String password, Boolean social, String name, UserRoleEnum role) {
         this.email = email;
         this.userpassword = password;
         this.usersocial = Boolean.TRUE;
@@ -46,5 +51,6 @@ public class UserEntity {
         this.userlevel = 0;
         this.userimage = "none";
         this.username = name;
+        this.role = role;
     }
 }

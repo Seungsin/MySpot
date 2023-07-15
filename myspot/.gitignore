@@ -38,3 +38,6 @@ out/
 
 ### settings ###
 !**/src/main/resources/application.properties
+/src/main/resources/FirebaseServiceAccountKey.json
+/src/main/resources/GCPServiceKey.json
+/src/main/resources/application-KEY.properties

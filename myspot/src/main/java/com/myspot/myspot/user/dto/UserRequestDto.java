@@ -4,20 +4,17 @@ import com.myspot.myspot.user.domain.entity.UserEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class UserDto {
+public class UserRequestDto {
 
     private static final String ROLE_PREFIX = "MEMBER";
     private String user_email;
@@ -45,7 +42,7 @@ public class UserDto {
     }
 
     @Builder
-    public UserDto(String email, String password, Boolean social, String name) {
+    public UserRequestDto(String email, String password, Boolean social, String name) {
         this.user_email = email;
         this.password = password;
         this.user_social = social;
