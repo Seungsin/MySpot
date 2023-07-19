@@ -4,7 +4,6 @@ import com.myspot.myspot.jwt.JwtAuthenticationFilter;
 import com.myspot.myspot.jwt.JwtAuthorizationFilter;
 import com.myspot.myspot.jwt.JwtUtil;
 import com.myspot.myspot.security.UserDetailsServiceImpl;
-import com.myspot.myspot.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
