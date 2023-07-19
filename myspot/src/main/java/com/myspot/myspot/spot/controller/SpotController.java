@@ -1,11 +1,13 @@
 package com.myspot.myspot.spot.controller;
 
 import com.myspot.myspot.spot.dto.AddSpotDTO;
-import com.myspot.myspot.spot.dto.SpotDto;
 import com.myspot.myspot.spot.service.SpotService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Map;

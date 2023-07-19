@@ -1,13 +1,12 @@
 package com.myspot.myspot.spot.dto;
 
-import com.google.api.client.util.DateTime;
 import com.myspot.myspot.spot.domain.entity.SpotEntity;
-import com.myspot.myspot.user.domain.entity.UserEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 
 @Getter

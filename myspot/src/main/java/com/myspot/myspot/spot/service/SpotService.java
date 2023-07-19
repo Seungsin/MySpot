@@ -1,7 +1,5 @@
 package com.myspot.myspot.spot.service;
 
-import com.google.api.client.util.DateTime;
-import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.myspot.myspot.spot.domain.entity.LocationEntity;
@@ -16,12 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import javax.transaction.Transactional;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service

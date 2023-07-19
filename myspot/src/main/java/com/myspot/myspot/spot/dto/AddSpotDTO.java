@@ -1,6 +1,5 @@
 package com.myspot.myspot.spot.dto;
 
-import com.myspot.myspot.spot.domain.entity.LocationEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
