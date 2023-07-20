@@ -58,7 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         System.out.println("authentication : " + authentication.getName());
                         response.setStatus(200);
-                        response.sendRedirect("/user/login/"+authentication.getName());
+
+                        //response.sendRedirect("/user/login/"+authentication.getName());
+
                     }
                 })
                 .failureHandler(new AuthenticationFailureHandler() {

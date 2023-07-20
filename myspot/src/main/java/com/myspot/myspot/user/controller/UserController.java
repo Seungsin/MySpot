@@ -1,16 +1,11 @@
 package com.myspot.myspot.user.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.myspot.myspot.user.dto.UserDto;
+import com.myspot.myspot.user.dto.UserRequestDto;
 import com.myspot.myspot.user.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.ldap.HasControls;
-import javax.swing.text.StyledEditorKit;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -20,8 +15,8 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/user/signup")
-    public ResponseEntity<Map<String, Object>> execSignup(@RequestBody UserDto userDto) {
-        Map<String, Object> result = userService.joinUser(userDto);
+    public ResponseEntity<Map<String, Object>> execSignup(@RequestBody UserRequestDto userRequestDto) {
+        Map<String, Object> result = userService.joinUser(userRequestDto);
         if(result.get("result").equals("fail")){
             return ResponseEntity.badRequest().body(result);
         }else{
@@ -42,7 +37,7 @@ public class UserController {
     }
 
     //이메일 중복체크
-    @GetMapping("/user/check")
+    @GetMapping("/user/checkEmail")
     public ResponseEntity checkEmail(@RequestParam("email") String email){
         if(userService.checkUser(email)){
             return ResponseEntity.ok().body("");
@@ -51,14 +46,31 @@ public class UserController {
         }
     }
 
-    // 내 정보 페이지
-    @RequestMapping("/user/info/{email}")
-    public String dispMyInfo(@PathVariable("email") String email) {
-        return email;
+    //닉네임 중복체크
+    @GetMapping("/user/checkName")
+    public ResponseEntity checkUserName(@RequestParam("name") String name){
+        if(userService.checkUsername(name)){
+            return ResponseEntity.ok().body("");
+        }else{
+            return ResponseEntity.badRequest().body("");
+        }
     }
 
-    @GetMapping("/user/success")
-    public String success(){
-        return "success";
+    // 내 정보 페이지
+    @GetMapping("/user/info")
+    public ResponseEntity<Map<String, Object>> dispMyInfo(@RequestParam("email") String email) {
+        Map<String, Object> responseBody = userService.getUserPage(email);
+
+        if(responseBody.get("result").equals("fail")){
+            return ResponseEntity.badRequest().body(responseBody);
+        }
+
+        return ResponseEntity.ok().body(responseBody);
     }
+
+    //유저 마이페이지
+//    @RequestMapping("/user/info/mypage")
+//    public ResponseEntity<Map<String, Object>> dispMypage(){
+//
+//    }
 }
