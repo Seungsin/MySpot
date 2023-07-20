@@ -36,7 +36,7 @@ public class SpotEntity {
 
     private String spot_Comment;
 
-    @Column(length = 200)
+    @Column(length = 1000)
     private String spot_Photo;
 
     @Column(length = 100)
@@ -55,4 +55,6 @@ public class SpotEntity {
         this.spot_Folder = spotFolder;
         this.spot_date = spotDate;
     }
+
+
 }

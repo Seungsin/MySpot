@@ -44,4 +44,8 @@ public class UserEntity {
         this.userimage = "none";
         this.username = name;
     }
+
+    public void update(String userimage){
+        this.userimage = userimage;
+    }
 }

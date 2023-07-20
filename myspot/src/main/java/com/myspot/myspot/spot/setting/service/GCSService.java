@@ -1,11 +1,11 @@
-package com.myspot.myspot.setting.service;
+package com.myspot.myspot.spot.setting.service;
 
 // GCSService.java
 
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
-import com.myspot.myspot.setting.UploadReqDto;
+import com.myspot.myspot.spot.setting.UploadReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -66,4 +66,15 @@ public class SpotController {
             return ResponseEntity.internalServerError().body(responseBody);
         }
     }
+
+    @GetMapping("/main/spot/recommend")
+    public ResponseEntity<Map<String, Object>> getSpotRecommendation(){
+        Map<String, Object> responseBody = spotService.spotRecommendation();
+
+        if(responseBody.get("result").equals("fail")){
+            return ResponseEntity.ok().body(responseBody);
+        }else {
+            return ResponseEntity.internalServerError().body(responseBody);
+        }
+    }
 }

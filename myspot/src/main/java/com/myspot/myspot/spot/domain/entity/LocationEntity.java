@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -30,6 +31,9 @@ public class LocationEntity {
     @Column(length = 200)
     private String locationAddress;
 
+    @Column(length = 200)
+    private String locationPhoto;
+
     //private LocalDateTime  userlastdate;
 
     @Builder
@@ -40,5 +44,9 @@ public class LocationEntity {
         this.locationLongitude = locationLongitude;
         this.locationmapcode = location_map_code;
         this.locationAddress = locationAddress;
+    }
+
+    public void update(String locationPhoto){
+        this.locationPhoto = locationPhoto;
     }
 }

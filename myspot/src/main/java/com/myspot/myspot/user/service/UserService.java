@@ -1,5 +1,7 @@
 package com.myspot.myspot.user.service;
 
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
 import com.myspot.myspot.spot.domain.entity.LocationEntity;
 import com.myspot.myspot.spot.domain.entity.SpotEntity;
 import com.myspot.myspot.spot.domain.repository.LocationRepository;
@@ -20,8 +22,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
+
 
 @Service
 @AllArgsConstructor
@@ -29,6 +34,7 @@ public class UserService {
     private UserRepository userRepository;
     private SpotRepository spotRepository;
     private LocationRepository locationRepository;
+    private final Storage storage;
 
     //아이디 중복체크
     public Boolean checkUser(String userEmail){
@@ -108,15 +114,11 @@ public class UserService {
             if(getSpotEntity.getSpot_Photo()==null){
                 mySpotReviewDtoList.add(new MySpotReviewDto(null, getSpotEntity.getSpot_Comment(), getSpotEntity.getSpot_date()));
             }else{
-                String baseLink = "https://storage.googleapis.com/myspot_photo_storage/spotImg/";
+                //String baseLink = "https://storage.googleapis.com/myspot_photo_storage/spotImg/";
 
                 String spotPhotoString = getSpotEntity.getSpot_Photo();
                 spotPhotoString = spotPhotoString.substring(1, spotPhotoString.length()-1);
                 List<String> spotPhotoList = new ArrayList<>(List.of(spotPhotoString.split(", ")));
-
-                for(int i=0;i<spotPhotoList.size();i++){
-                    spotPhotoList.set(i, baseLink+spotPhotoList.get(i));
-                }
 
                 mySpotReviewDtoList.add(new MySpotReviewDto(spotPhotoList, getSpotEntity.getSpot_Comment(), getSpotEntity.getSpot_date()));
             }
@@ -125,6 +127,49 @@ public class UserService {
         result.put("result", "success");
         result.put("mySpotList", mySpotListDtoList);
         result.put("mySpotReviewList", mySpotReviewDtoList);
+
+        return result;
+    }
+
+    //프로필 등록
+    public Map<String, Object> uploadUserPhoto(MultipartFile uploadPhoto, String email) throws IOException {
+        Map<String, Object> result = new HashMap<>();
+
+        String userProfilePhoto = "";
+
+        //이미지가 존재할때
+        if (uploadPhoto!=null) {
+            String baseLink = "https://storage.googleapis.com/myspot_photo_storage/userProfilePhoto/";
+
+            //GCP에 이미지 등록
+            String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+
+            String ext = uploadPhoto.getContentType(); // 파일의 형식 ex) JPG
+
+            if(ext==null||!ext.contains("image")){
+                result.put("result", "fail");
+                result.put("message", "사진이 없거나 올바른 형태가 아닙니다.");
+                return result;
+            }
+
+            BlobInfo blobInfo = storage.create(
+                    BlobInfo.newBuilder("myspot_photo_storage", "userProfilePhoto/" + uuid)
+                            .setContentType(ext)
+                            .build(),
+                    uploadPhoto.getInputStream());
+
+            userProfilePhoto = baseLink+uuid;
+        }
+
+        //DB에 저장
+        userRepository.findById(email).orElseThrow(()->new IllegalArgumentException("해당 계정이 없습니다.")).update(userProfilePhoto);
+
+        Map<String, String> resultBody = new HashMap<>();
+        resultBody.put("email", email);
+        resultBody.put("photoURL", userProfilePhoto);
+
+        result.put("result", "success");
+        result.put("message", resultBody);
 
         return result;
     }
