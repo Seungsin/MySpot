@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dd0414d7-e3fd-4939-9d20-2d74757b72f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/config/FirebaseConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/controller/SpotController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/domain/entity/LocationEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/domain/entity/SpotEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/domain/repository/LocationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/domain/repository/SpotRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/dto/SpotDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/service/SpotService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myspot/src/main/resources/serviceAccountKey.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myspot/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/myspot/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/controller/LocationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/controller/LocationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/dto/LocationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/dto/LocationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/service/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/spot/service/LocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/user/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/user/domain/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/myspot/src/main/java/com/myspot/myspot/user/domain/entity/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myspot/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/myspot/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2FDESE82zbtFNZKsw9RcZeTA2vE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/sinny/Desktop/Project/MySpot",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="/Users/sinny/Desktop/Project/MySpot/myspot/build.gradle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/myspot/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle./Users/sinny/Desktop/Project/MySpot/myspot/build.gradle" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dd0414d7-e3fd-4939-9d20-2d74757b72f9" name="Changes" comment="" />
+      <created>1664018252144</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664018252144</updated>
+      <workItem from="1664018254073" duration="171000" />
+      <workItem from="1664028326251" duration="20000" />
+      <workItem from="1664028633049" duration="72000" />
+      <workItem from="1664053067090" duration="22000" />
+      <workItem from="1664063393537" duration="49000" />
+      <workItem from="1664063517905" duration="781000" />
+      <workItem from="1664068982376" duration="15000" />
+      <workItem from="1664072029274" duration="5000" />
+      <workItem from="1664454300492" duration="1762000" />
+      <workItem from="1668019438793" duration="9000" />
+      <workItem from="1668019472048" duration="92000" />
+      <workItem from="1668019599477" duration="14000" />
+      <workItem from="1668091943010" duration="27000" />
+      <workItem from="1668094053033" duration="28000" />
+      <workItem from="1668102216634" duration="658000" />
+      <workItem from="1668175851378" duration="1541000" />
+      <workItem from="1668348686964" duration="43000" />
+      <workItem from="1668434225029" duration="1038000" />
+      <workItem from="1668870869434" duration="606000" />
+      <workItem from="1670512341358" duration="2466000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

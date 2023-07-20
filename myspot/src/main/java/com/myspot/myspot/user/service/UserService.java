@@ -6,19 +6,12 @@ import com.myspot.myspot.spot.domain.entity.LocationEntity;
 import com.myspot.myspot.spot.domain.entity.SpotEntity;
 import com.myspot.myspot.spot.domain.repository.LocationRepository;
 import com.myspot.myspot.spot.domain.repository.SpotRepository;
-import com.myspot.myspot.user.domain.Role;
 import com.myspot.myspot.user.domain.entity.UserEntity;
 import com.myspot.myspot.user.domain.repository.UserRepository;
 import com.myspot.myspot.user.dto.MySpotListDto;
 import com.myspot.myspot.user.dto.MySpotReviewDto;
-import com.myspot.myspot.user.dto.UserDto;
+import com.myspot.myspot.user.dto.UserRequestDto;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,19 +47,19 @@ public class UserService {
 
     //회원가입
     @Transactional
-    public Map<String, Object> joinUser(UserDto userDto) {
+    public Map<String, Object> joinUser(UserRequestDto userRequestDto) {
         Map<String, Object> result = new HashMap<>();
-        if(!checkUser(userDto.getUser_email())) {
+        if(!checkUser(userRequestDto.getUser_email())) {
             result.put("result", "fail");
             return result;
         }
         // 비밀번호 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        userDto.setPassword("{bcrypt}"+passwordEncoder.encode(userDto.getPassword()));
+        userRequestDto.setPassword("{bcrypt}"+passwordEncoder.encode(userRequestDto.getPassword()));
 
-        result.put("user_email", userRepository.save(userDto.toEntity()).getEmail());
+        result.put("user_email", userRepository.save(userRequestDto.toEntity()).getEmail());
         result.put("result", "success");
-        result.put("user_name", userDto.getUser_name());
+        result.put("user_name", userRequestDto.getUser_name());
 
         return result;
     }

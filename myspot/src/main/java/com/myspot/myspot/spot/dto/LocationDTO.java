@@ -1,13 +1,9 @@
 package com.myspot.myspot.spot.dto;
 
 import com.myspot.myspot.spot.domain.entity.LocationEntity;
-import com.myspot.myspot.spot.domain.entity.SpotEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Getter
 @Setter
