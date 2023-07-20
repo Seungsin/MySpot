@@ -1,4 +1,4 @@
-package com.myspot.myspot.setting;
+package com.myspot.myspot.spot.setting;
 
 // UploadReqDto.java
 

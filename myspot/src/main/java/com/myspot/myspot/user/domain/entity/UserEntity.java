@@ -50,4 +50,8 @@ public class UserEntity {
         this.username = name;
         this.role = role;
     }
+
+    public void update(String userimage){
+        this.userimage = userimage;
+    }
 }

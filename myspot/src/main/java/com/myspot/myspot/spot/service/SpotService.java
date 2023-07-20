@@ -10,6 +10,7 @@ import com.myspot.myspot.spot.domain.repository.SpotTagRepository;
 import com.myspot.myspot.spot.dto.*;
 import com.myspot.myspot.user.domain.entity.UserEntity;
 import com.myspot.myspot.user.domain.repository.UserRepository;
+import com.myspot.myspot.user.dto.MySpotReviewDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,7 @@ public class SpotService {
     private LocationService locationService;
     private SpotTagRepository spotTagRepository;
     private final Storage storage;
+
     //spot 등록
     @Transactional
     public Map<String, Object> addNewSpot(AddSpotDTO addspotDto) throws IOException {
@@ -59,19 +61,31 @@ public class SpotService {
 
             //이미지가 존재할때
             if (addspotDto.getSpotImg()!=null) {
+                String baseLink = "https://storage.googleapis.com/myspot_photo_storage/spotImg/";
                 List<String> imgNames = new ArrayList<>();
+
                 //GCP에 이미지 등록
                 for (MultipartFile spotImg : addspotDto.getSpotImg()) {
                     String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
 
                     String ext = spotImg.getContentType(); // 파일의 형식 ex) JPG
 
+                    if(ext==null||!ext.contains("image")){
+                        continue;
+                    }
+
                     BlobInfo blobInfo = storage.create(
                             BlobInfo.newBuilder("myspot_photo_storage", "spotImg/" + uuid)
                                     .setContentType(ext)
                                     .build(),
                             spotImg.getInputStream());
-                    imgNames.add(uuid);
+
+                    imgNames.add(baseLink+uuid);
+
+                    //여기도 수정하기><
+                    if (locationRepository.findByLocationmapcode(addspotDto.getLocationMapCode()).get().getLocationPhoto()==null){
+                        locationRepository.findByLocationmapcode(addspotDto.getLocationMapCode()).get().update(baseLink+uuid);
+                    }
                 }
 
                 //DB에 저장
@@ -149,10 +163,12 @@ public class SpotService {
         for(int i=0;i<locationList.size();i++){
             LocationEntity getOne = locationList.get(i);
             double dist = distance(lat, lon, Double.parseDouble(getOne.getLocationLatitude()), Double.parseDouble(getOne.getLocationLongitude()), "meter");
-            if(dist<500000000){
+
+            //1키로미터 = 1000미터
+            if(dist<1000){
                 int count = spotRepository.countByLocationnum(getOne.getLocation_num()).intValue();
 
-                resultList.add(new SearchResultDTO(getOne.getLocation_num().toString(), getOne.getLocationAddress(), getOne.getLocationLongitude(), getOne.getLocationLatitude(), getOne.getLocationname(), count));
+                resultList.add(new SearchResultDTO(getOne.getLocation_num().toString(), getOne.getLocationAddress(), getOne.getLocationLongitude(), getOne.getLocationLatitude(), getOne.getLocationname(), count, getOne.getLocationPhoto()));
             }
         }
 
@@ -185,13 +201,30 @@ public class SpotService {
         Integer locationNum = locationWraper.get().getLocation_num();
 
         List<SpotEntity> reviewList = spotRepository.findAllByLocationnum(locationNum);
+
         if(reviewList.isEmpty()){
             result.put("result", "fail");
             result.put("message", "등록된 리뷰가 없습니다.");
             return result;
         }else{
+            List<SpotReturnDTO> spotReturnDTOList = new ArrayList<>();
+
+            for(int i=0;i<reviewList.size();i++){
+                spotReturnDTOList.add(new SpotReturnDTO(reviewList.get(i)));
+                if(reviewList.get(i).getSpot_Photo()!=null){
+                    //String baseLink = "https://storage.googleapis.com/myspot_photo_storage/spotImg/";
+
+                    String spotPhotoString = reviewList.get(i).getSpot_Photo();
+                    spotPhotoString = spotPhotoString.substring(1, spotPhotoString.length()-1);
+                    List<String> spotPhotoList = new ArrayList<>(List.of(spotPhotoString.split(", ")));
+
+                    spotReturnDTOList.get(i).setSpotPhotoList(spotPhotoList);
+                }
+            }
+
             result.put("result", "success");
-            result.put("data", reviewList);
+            result.put("LocationData", locationWraper.get());
+            result.put("ReviewData", spotReturnDTOList);
         }
 
         return result;
@@ -212,7 +245,32 @@ public class SpotService {
             dist = dist * 1609.344;
         }
 
+        //dist : ???
         return (dist);
+    }
+
+    //스팟추천
+    public Map<String, Object> spotRecommendation(){
+        Map<String, Object> result = new HashMap<>();
+
+        //페이징 기법을 사용해서 다시 코딩하기
+        Random random = new Random();
+
+        List<LocationEntity> locationList = locationRepository.findAll();
+
+        if(locationList.isEmpty()){
+            result.put("result", "fail");
+            result.put("message", "스팟 목록이 비었습니다.");
+            return result;
+        }
+
+        //SpotEntity recommendSpot = spotList.get(random.nextInt(spotList.size()));
+        List<LocationEntity> locationRecommendList = locationList;
+
+        result.put("result", "success");
+        result.put("recommendSpot", locationRecommendList);
+
+        return result;
     }
 
 

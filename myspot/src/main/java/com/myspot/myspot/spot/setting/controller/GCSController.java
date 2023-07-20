@@ -1,10 +1,10 @@
-package com.myspot.myspot.setting.controller;
+package com.myspot.myspot.spot.setting.controller;
 
 // GCSController.java
 
 import com.google.cloud.storage.BlobInfo;
-import com.myspot.myspot.setting.UploadReqDto;
-import com.myspot.myspot.setting.service.GCSService;
+import com.myspot.myspot.spot.setting.UploadReqDto;
+import com.myspot.myspot.spot.setting.service.GCSService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
